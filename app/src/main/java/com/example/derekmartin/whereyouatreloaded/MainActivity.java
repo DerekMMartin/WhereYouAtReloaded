@@ -26,6 +26,12 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
 
         fManager=getSupportFragmentManager();
+
+        //initializes to the first fragment in menu and selects it
+        NavigationView nv= findViewById(R.id.nav_view);
+        nv.setCheckedItem(R.id.menufirst);
+        changeFragment(new FirstFragment());
+
         dLayout=findViewById(R.id.drawerLayout);
         NavigationView nView = findViewById(R.id.nav_view);
         nView.setNavigationItemSelectedListener(
