@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Friends"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_margin="10dp"
         android:gravity="top|center"/>
 
