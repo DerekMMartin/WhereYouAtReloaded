@@ -1,6 +1,7 @@
 package com.example.derekmartin.whereyouatreloaded;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -38,13 +39,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        if(currentUser != null)
+        {
+            Toast.makeText(LoginActivity.this, ("Welcome back "+currentUser.getEmail()), Toast.LENGTH_SHORT).show();
+            updateUI(currentUser);
+        }
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        //TODO Transfer to main app
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("name",currentUser.getEmail());
+        startActivity(intent);
     }
 
     private boolean validateTextFields(){
