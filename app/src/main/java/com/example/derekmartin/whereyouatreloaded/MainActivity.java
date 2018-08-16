@@ -14,7 +14,8 @@ import android.view.MenuItem;
 public class MainActivity extends FragmentActivity
         implements
         FirstFragment.OnFragmentInteractionListener,
-        SecondFragment.OnFragmentInteractionListener
+        SecondFragment.OnFragmentInteractionListener,
+        FriendsFragment.OnFragmentInteractionListener
 {
 
     private DrawerLayout dLayout;
@@ -41,12 +42,16 @@ public class MainActivity extends FragmentActivity
                         item.setChecked(true);
                         dLayout.closeDrawers();
 
-
-
-                        if(item.getItemId()==R.id.menufirst){
-                            changeFragment(new FirstFragment());
-                        }else{
-                            changeFragment(new SecondFragment());
+                        switch (item.getItemId()){
+                            case R.id.menufirst:
+                                changeFragment(new FirstFragment());
+                                break;
+                            case R.id.menusecond:
+                                changeFragment(new SecondFragment());
+                                break;
+                            case R.id.menuFriends:
+                                changeFragment(new FriendsFragment());
+                                break;
                         }
 
                         return true;

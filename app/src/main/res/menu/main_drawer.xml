@@ -9,5 +9,8 @@
             android:id="@+id/menusecond"
             android:title="Test 2"
             />
+        <item
+            android:id="@+id/menuFriends"
+            android:title="Friends" />
     </group>
 </menu>
