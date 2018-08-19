@@ -3,14 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FriendsFragment">
+    tools:context=".FriendsFragment"
+    android:id="@+id/FriendsLayout"
+    android:orientation="vertical">
+
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Friends"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:gravity="top|center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Search for new friends"
+            android:id="@+id/SearchTextField"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:id="@+id/FriendsSearchButton"/>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

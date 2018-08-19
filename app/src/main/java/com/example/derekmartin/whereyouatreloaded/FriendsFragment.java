@@ -9,18 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -36,7 +43,12 @@ public class FriendsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     private String Email = "";
+    private FirebaseAuth FireBase;
+    private FirebaseUser FireUser;
+    private LinearLayout FriendsLayout;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -46,49 +58,115 @@ public class FriendsFragment extends Fragment {
     public FriendsFragment() {
         // Required empty public constructor
     }
-    public void SetupFragment(String userEmail){
-        Email = userEmail;
-        populateFriendsList();
+    public void SetupFragment(){
+        FireBase = FirebaseAuth.getInstance();
+        FireUser = FireBase.getCurrentUser();
+        Email = FireUser.getEmail();
+        SetupSearchClick();
+        getFriends();
     }
 
-    private void populateFriendsList(){
-        //TODO database call for frinds
+    private void SetupSearchClick(){
+        Button b = FriendsLayout.findViewById(R.id.FriendsSearchButton);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(DocumentSnapshot doc : task.getResult())
+                        {
+                            if(doc.getId().equals(((EditText)getView().findViewById(R.id.SearchTextField)).getText().toString())){
+                                AddFriend(doc.getId());
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+    private void getFriends(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .document(Email)
+                .collection("Friends")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        ArrayList<String> Friends = new ArrayList<>();
 
-        ArrayList<String> friends = getFriends();
+                        for (DocumentSnapshot doc: task.getResult()) {
+                            Toast.makeText(getActivity(), ("HERE"), Toast.LENGTH_SHORT).show();
+                            Friends.add(doc.getId());
+                        }
+                        SetupFriends(Friends);
+
+                    }
+                });
+    }
+    private void SetupFriends(ArrayList<String> friends){
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(10,10,10,10);
+
+        Toast.makeText(getActivity(), (Email+" friends : "+friends.size()), Toast.LENGTH_SHORT).show();
         for (int i = 0; i< friends.size();i++)
         {
-            LinearLayout l = new LinearLayout(this.getContext());
+            LinearLayout l = new LinearLayout(getView().getContext());
             l.setOrientation(LinearLayout.HORIZONTAL);
-            TextView tv = new TextView(l.getContext());
+            l.setLayoutParams(params);
+
+            TextView tv = new TextView(this.getContext());
+            tv.setLayoutParams(params);
+            tv.setTextSize(14);
             tv.setText(friends.get(i));
             l.addView(tv);
+
+
             Button b = new Button(l.getContext());
+            b.setText("Remove");
+            b.setContentDescription(friends.get((i)));
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO Remove friend
+                    removeFriend(((Button)v).getContentDescription().toString());
                 }
             });
             l.addView(b);
+
+
+            FriendsLayout.addView(l);
         }
     }
-
-    private ArrayList<String> getFriends(){
-        final ArrayList<String> Friends = new ArrayList<>();
+    private void AddFriend(String name){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .document(Email)
-                .collection("friends")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+                .collection("Friends")
+                .document(name)
+                .set(new HashMap<>());
+    }
+    private void removeFriend(final String FriendEmail){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .document(Email)
+                .collection("Friends")
+                .document(FriendEmail)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot doc: task.getResult()) {
-                            Friends.add(doc.getId());
-                        }
-                     }
-        });
-        return Friends;
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity(),(FriendEmail+" removed."),Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(),"Friend removal error",Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /**
@@ -122,7 +200,10 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, container, false);
+        LinearLayout ll = (LinearLayout)inflater.inflate(R.layout.fragment_friends, container, false);
+        FriendsLayout = ll.findViewById(R.id.FriendsLayout);
+        SetupFragment();
+        return ll;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -148,7 +229,6 @@ public class FriendsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

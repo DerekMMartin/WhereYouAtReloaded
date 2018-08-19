@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -79,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         o.setMessage("Signing you up");
         o.show();
-
         mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
@@ -88,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("Users").document(user.getEmail()).set(new HashMap<>());
                             Toast.makeText(LoginActivity.this, "Sign up successful.",
                                     Toast.LENGTH_SHORT).show();
                             o.dismiss();
