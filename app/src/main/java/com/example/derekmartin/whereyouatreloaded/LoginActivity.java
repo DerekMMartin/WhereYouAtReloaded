@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             SignInClick(view);
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Sign up failed.",
+                            Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(),
                                     Toast.LENGTH_SHORT).show();
                             o.dismiss();
                         }
