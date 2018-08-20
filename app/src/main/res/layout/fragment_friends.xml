@@ -22,12 +22,12 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Search for new friends"
+            android:hint="Add new friend."
             android:id="@+id/SearchTextField"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="Add"
             android:id="@+id/FriendsSearchButton"/>
 
 

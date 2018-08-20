@@ -98,7 +98,6 @@ public class FriendsFragment extends Fragment {
                         ArrayList<String> Friends = new ArrayList<>();
 
                         for (DocumentSnapshot doc: task.getResult()) {
-                            Toast.makeText(getActivity(), ("HERE"), Toast.LENGTH_SHORT).show();
                             Friends.add(doc.getId());
                         }
                         SetupFriends(Friends);
@@ -130,7 +129,6 @@ public class FriendsFragment extends Fragment {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO Remove friend
                     removeFriend(((Button)v).getContentDescription().toString());
                 }
             });
@@ -147,6 +145,7 @@ public class FriendsFragment extends Fragment {
                 .collection("Friends")
                 .document(name)
                 .set(new HashMap<>());
+        Toast.makeText(getActivity(),"Friend added",Toast.LENGTH_LONG).show();
     }
     private void removeFriend(final String FriendEmail){
         FirebaseFirestore db = FirebaseFirestore.getInstance();

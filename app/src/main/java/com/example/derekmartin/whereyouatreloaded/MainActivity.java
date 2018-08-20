@@ -10,6 +10,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends FragmentActivity
         implements
@@ -29,12 +32,15 @@ public class MainActivity extends FragmentActivity
         fManager=getSupportFragmentManager();
 
         //initializes to the first fragment in menu and selects it
-        NavigationView nv= findViewById(R.id.nav_view);
-        nv.setCheckedItem(R.id.menufirst);
-        changeFragment(new FirstFragment());
-
+//        NavigationView nv= findViewById(R.id.nav_view);
+//        nv.setCheckedItem(R.id.menufirst);
+//        changeFragment(new FirstFragment());
+        //TODO Why is there a duplicate
         dLayout=findViewById(R.id.drawerLayout);
         NavigationView nView = findViewById(R.id.nav_view);
+        nView.setCheckedItem(R.id.menufirst);
+        changeFragment(new FirstFragment());
+
         nView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -57,7 +63,7 @@ public class MainActivity extends FragmentActivity
                         return true;
                     }
                 });
-        }
+    }
 
         public void changeFragment(Fragment f){
             FragmentTransaction fTrans=fManager.beginTransaction();
