@@ -18,7 +18,8 @@ public class MainActivity extends FragmentActivity
         implements
         FirstFragment.OnFragmentInteractionListener,
         SecondFragment.OnFragmentInteractionListener,
-        FriendsFragment.OnFragmentInteractionListener
+        FriendsFragment.OnFragmentInteractionListener,
+        CameraFragment.OnFragmentInteractionListener
 {
 
     private DrawerLayout dLayout;
@@ -57,6 +58,12 @@ public class MainActivity extends FragmentActivity
                                 break;
                             case R.id.menuFriends:
                                 changeFragment(new FriendsFragment());
+                                break;
+                            case R.id.menuCamera:
+                                changeFragment(new CameraFragment());
+                                break;
+                            case R.id.menuCameraIntegrated:
+                                changeFragment(new CameraFragmentIntegration());
                                 break;
                         }
 

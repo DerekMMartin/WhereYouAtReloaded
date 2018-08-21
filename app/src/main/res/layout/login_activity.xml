@@ -11,7 +11,8 @@
         android:text="Where You At Reloaded"
         android:gravity="center"
         android:textSize="25dp"
-        android:layout_margin="30dp"/>
+        android:layout_margin="30dp"
+        android:id="@+id/ea"/>
 
     <EditText
         android:id="@+id/Email"
