@@ -12,11 +12,35 @@
         android:layout_height="wrap_content"
         android:id="@+id/texture_view"/>
 
+    <ImageView
+        android:id="@+id/picture_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/capture_photo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="50dp" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/capture_photo_button"
+        android:id="@+id/cancel_photo_button"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:text="Retake"
+        android:visibility="invisible"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/send_photo_button"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="10dp"
+        android:text="Send"
+        android:visibility="invisible"/>
 </FrameLayout>

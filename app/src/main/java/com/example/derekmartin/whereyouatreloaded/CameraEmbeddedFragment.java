@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -12,6 +13,7 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +28,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,10 +66,20 @@ public class CameraEmbeddedFragment extends Fragment {
     public void onTakePhotoButtonClicked() {
         lock();
         FileOutputStream outputPhoto = null;
+        Bitmap photoBitmap=null;
         try {
             outputPhoto = new FileOutputStream(createImageFile(galleryFolder));
-            ((TextureView)(MyView.findViewById(R.id.texture_view))).getBitmap()
-                    .compress(Bitmap.CompressFormat.PNG, 100, outputPhoto);
+            photoBitmap=((TextureView)(MyView.findViewById(R.id.texture_view))).getBitmap();
+            photoBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputPhoto);
+
+            MyView.findViewById(R.id.capture_photo_button).setVisibility(View.INVISIBLE);
+            MyView.findViewById(R.id.send_photo_button).setVisibility(View.VISIBLE);
+            MyView.findViewById(R.id.cancel_photo_button).setVisibility(View.VISIBLE);
+
+            ImageView preview=(ImageView)MyView.findViewById(R.id.picture_preview);
+            preview.setVisibility(View.VISIBLE);
+            preview.setImageBitmap(photoBitmap);
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -79,6 +92,15 @@ public class CameraEmbeddedFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+    public void onCancelPhotoButtonClicked(){
+        MyView.findViewById(R.id.capture_photo_button).setVisibility(View.VISIBLE);
+        MyView.findViewById(R.id.send_photo_button).setVisibility(View.INVISIBLE);
+        MyView.findViewById(R.id.cancel_photo_button).setVisibility(View.INVISIBLE);
+        MyView.findViewById(R.id.picture_preview).setVisibility(View.INVISIBLE);
+    }
+    public void onSendButtonClicked(){
+
     }
     private void createImageGallery() {
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -233,6 +255,18 @@ public class CameraEmbeddedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onTakePhotoButtonClicked();
+            }
+        });
+        MyView.findViewById(R.id.cancel_photo_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCancelPhotoButtonClicked();
+            }
+        });
+        MyView.findViewById(R.id.send_photo_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSendButtonClicked();
             }
         });
         return  MyView;
