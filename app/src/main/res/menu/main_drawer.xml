@@ -16,7 +16,7 @@
             android:id="@+id/menuCamera"
             android:title="Camera"/>
         <item
-            android:id="@+id/menuCameraIntegrated"
-            android:title="Camera Integrated"/>
+            android:id="@+id/menuCameraEmbedded"
+            android:title="Camera Embedded"/>
     </group>
 </menu>

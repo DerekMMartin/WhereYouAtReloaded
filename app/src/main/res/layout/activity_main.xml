@@ -6,19 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:theme="@style/AppTheme">
 
     <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--<fragment android:name="com.example.derekmartin.whereyouatreloaded.FirstFragment"-->
-            <!--android:id="@+id/f1"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_width="match_parent" />-->
-
+        android:layout_height="match_parent"
+        android:theme="@style/AppTheme">
     </FrameLayout>
 
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
@@ -29,6 +25,29 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/main_drawer" />
+        app:menu="@menu/main_drawer"
+        android:theme="@style/AppTheme">
+
+
+        <TextView
+            android:id="@+id/EmailDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="UserEmail"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/LogOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Log out"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_marginBottom="50dp"/>
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
