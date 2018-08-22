@@ -1,12 +1,14 @@
 package com.example.derekmartin.whereyouatreloaded;
 
 import android.content.Context;
+import android.graphics.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.hardware.camera2.*;
 
 import com.google.android.gms.plus.PlusOneButton;
 
@@ -33,6 +35,10 @@ public class CameraFragmentIntegration extends Fragment {
     private PlusOneButton mPlusOneButton;
 
     private OnFragmentInteractionListener mListener;
+
+    private Camera mCamera;
+    private CameraPreview mPreview;
+
 
     public CameraFragmentIntegration() {
         // Required empty public constructor
@@ -73,6 +79,10 @@ public class CameraFragmentIntegration extends Fragment {
 
         //Find the +1 button
         mPlusOneButton = (PlusOneButton) view.findViewById(R.id.plus_one_button);
+
+
+        mCamera = new Camera();
+        mPreview = new CameraPreview(this, mCamera);
 
         return view;
     }
