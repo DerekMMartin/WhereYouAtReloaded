@@ -22,10 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends FragmentActivity
         implements
-        FirstFragment.OnFragmentInteractionListener,
-        SecondFragment.OnFragmentInteractionListener,
         FriendsFragment.OnFragmentInteractionListener,
-        CameraFragment.OnFragmentInteractionListener,
         CameraEmbeddedFragment.OnFragmentInteractionListener,
         SendingFragment.OnFragmentInteractionListener
 {
@@ -57,8 +54,8 @@ public class MainActivity extends FragmentActivity
                 LogOutAndSwitch();
             }
         });
-        nView.setCheckedItem(R.id.menufirst);
-        changeFragment(new FirstFragment());
+        nView.setCheckedItem(R.id.menuFriends);
+        changeFragment(new FriendsFragment());
 
         nView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -68,17 +65,8 @@ public class MainActivity extends FragmentActivity
                         dLayout.closeDrawers();
 
                         switch (item.getItemId()){
-                            case R.id.menufirst:
-                                changeFragment(new FirstFragment());
-                                break;
-                            case R.id.menusecond:
-                                changeFragment(new SecondFragment());
-                                break;
                             case R.id.menuFriends:
                                 changeFragment(new FriendsFragment());
-                                break;
-                            case R.id.menuCamera:
-                                changeFragment(new CameraFragment());
                                 break;
                             case R.id.menuCameraEmbedded:
                                 changeFragment(new CameraEmbeddedFragment());
