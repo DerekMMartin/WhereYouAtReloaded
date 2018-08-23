@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,33 +46,55 @@ public class SendingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void SetupFragment(){
+    private void SetupFragment(){
         listView =  MyView.findViewById(R.id.SendingScrollView);
-
         adapter = new ArrayAdapter<String>(MyView.getContext(),R.layout.list_item,R.id.SendingTextView,listItems);
         listView.setAdapter(adapter);
 
+        MyView.findViewById(R.id.SendingSendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendPictures();
+                getSendingToPeople();
+            }
+        });
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("Friends").get()
+        db.collection("Users").document(FirebaseAuth.getInstance()
+                .getCurrentUser()
+                .getEmail())
+                .collection("Friends")
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Toast.makeText(MyView.getContext(),"Adding now", Toast.LENGTH_LONG);
                         for (DocumentSnapshot doc: task.getResult()) {
                             listItems.add(doc.getId());
                         }
                         adapter.notifyDataSetChanged();
+
                     }
                 });
     }
 
+    private void SendPictures() {
+        ArrayList<String> people = getSendingToPeople();
+        //TODO put sending in here..
+    }
 
-
-    public ArrayList<String> getSendingToPeople()
-    {
+    public ArrayList<String> getSendingToPeople(){
         ArrayList<String> People = new ArrayList<>();
-        People.addAll(listItems);
+        int Count = listView.getChildCount();
+
+        for (int i = 0; i<Count;i++) {
+            View ls = listView.getChildAt(i);
+            if (((CheckBox) ls.findViewById(R.id.SendingCheckBox)).isChecked()) {
+                People.add(((TextView) ls.findViewById(R.id.SendingTextView)).getText().toString());
+            }
+
+        }
+        Toast.makeText(MyView.getContext(),("People: "+People.size()),Toast.LENGTH_LONG).show();
         return People;
     }
 
@@ -85,13 +110,6 @@ public class SendingFragment extends Fragment {
         MyView =  inflater.inflate(R.layout.fragment_sending, container, false);
         SetupFragment();
         return MyView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override

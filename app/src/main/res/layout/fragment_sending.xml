@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".SendingFragment"
-
-    android:id="@+id/SendingScrollView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:choiceMode="multipleChoiceModal"
-    android:layout_margin="20dp">
-</ListView>
+    android:layout_height="match_parent"
+    tools:context=".SendingFragment">
+
+    <Button
+        android:id="@+id/SendingSendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="50dp"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:text="Send"/>
+
+    <ListView
+        android:id="@+id/SendingScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:choiceMode="multipleChoiceModal"
+        android:layout_margin="20dp">
+    </ListView>
+</FrameLayout>

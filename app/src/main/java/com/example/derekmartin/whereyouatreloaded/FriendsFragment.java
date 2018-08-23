@@ -109,7 +109,7 @@ public class FriendsFragment extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(10,10,10,10);
 
-        Toast.makeText(getActivity(), (Email+" friends : "+friends.size()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), (Email+" friends : "+friends.size()), Toast.LENGTH_SHORT).show();
         for (int i = 0; i< friends.size();i++)
         {
             LinearLayout l = new LinearLayout(getView().getContext());

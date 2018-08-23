@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -28,7 +30,9 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,6 +63,8 @@ public class CameraEmbeddedFragment extends Fragment {
     private CaptureRequest captureRequest;
     private CameraCaptureSession cameraCaptureSession;
     private File galleryFolder;
+    private android.support.v4.app.FragmentManager fManager;
+
 
     public CameraEmbeddedFragment() {
         // Required empty public constructor
@@ -100,7 +106,12 @@ public class CameraEmbeddedFragment extends Fragment {
         MyView.findViewById(R.id.picture_preview).setVisibility(View.INVISIBLE);
     }
     public void onSendButtonClicked(){
+        fManager=getActivity().getSupportFragmentManager();
+        FragmentTransaction fTrans=fManager.beginTransaction();
 
+        fTrans.replace(R.id.content_frame,new SendingFragment());
+        fTrans.addToBackStack(null);
+        fTrans.commit();
     }
     private void createImageGallery() {
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -209,7 +220,6 @@ public class CameraEmbeddedFragment extends Fragment {
 
         cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
         cameraFacing = CameraCharacteristics.LENS_FACING_BACK;
-
         surfaceTextureListener = new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
