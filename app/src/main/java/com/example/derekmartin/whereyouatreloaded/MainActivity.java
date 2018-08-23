@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity
         implements
         FriendsFragment.OnFragmentInteractionListener,
         CameraEmbeddedFragment.OnFragmentInteractionListener,
-        SendingFragment.OnFragmentInteractionListener
+        HomeFragment.OnFragmentInteractionListener
 {
 
     private DrawerLayout dLayout;
@@ -54,8 +54,8 @@ public class MainActivity extends FragmentActivity
                 LogOutAndSwitch();
             }
         });
-        nView.setCheckedItem(R.id.menuFriends);
-        changeFragment(new FriendsFragment());
+        nView.setCheckedItem(R.id.menuHome);
+        changeFragment(new HomeFragment());
 
         nView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -71,8 +71,8 @@ public class MainActivity extends FragmentActivity
                             case R.id.menuCameraEmbedded:
                                 changeFragment(new CameraEmbeddedFragment());
                                 break;
-                            case R.id.menuSending:
-                                changeFragment(new SendingFragment());
+                            case R.id.menuHome:
+                                changeFragment(new HomeFragment());
                                 break;
                         }
 

@@ -4,12 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,26 +111,33 @@ public class FriendsFragment extends Fragment {
                 });
     }
     private void SetupFriends(ArrayList<String> friends){
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(10,10,10,10);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(20,20,20,20);
 
-//        Toast.makeText(getActivity(), (Email+" friends : "+friends.size()), Toast.LENGTH_SHORT).show();
+        FrameLayout.LayoutParams ButtonParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ButtonParams.setMargins(20,20,20,20);
+        ButtonParams.gravity = Gravity.END;
+
+        FrameLayout.LayoutParams TextParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextParams.setMargins(20,20,20,20);
+        TextParams.gravity = Gravity.START;
+
         for (int i = 0; i< friends.size();i++)
         {
-            LinearLayout l = new LinearLayout(getView().getContext());
-            l.setOrientation(LinearLayout.HORIZONTAL);
+            FrameLayout l = new FrameLayout(getView().getContext());
             l.setLayoutParams(params);
 
             TextView tv = new TextView(this.getContext());
-            tv.setLayoutParams(params);
+            tv.setLayoutParams(TextParams);
             tv.setTextSize(14);
             tv.setText(friends.get(i));
-            l.addView(tv);
+            tv.setGravity(Gravity.CENTER);
 
 
             Button b = new Button(l.getContext());
             b.setText("Remove");
             b.setContentDescription(friends.get((i)));
+            b.setLayoutParams(ButtonParams);
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,6 +145,7 @@ public class FriendsFragment extends Fragment {
                 }
             });
             l.addView(b);
+            l.addView(tv);
 
 
             FriendsLayout.addView(l);
