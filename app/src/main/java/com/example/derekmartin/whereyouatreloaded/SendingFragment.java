@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,17 +111,22 @@ public class SendingFragment extends Fragment {
             //add to users document to tell that they have a picture
             db.collection("Users").document(p).collection(Email).document(b.getLastPathSegment()).set(new HashMap<>());
             //upload picture to storage
-            UploadTask task = ref.child(p+"/"+Email+"/"+b.getLastPathSegment()).putFile(b);
+            UploadTask task = ref.child(p + "/" + Email + "/" + b.getLastPathSegment()).putFile(b);
             task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getContext(),"Sent", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Sent", Toast.LENGTH_LONG).show();
                 }
             });
         }
 
         //delete the file
         image.delete();
+
+        FragmentManager fManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fTrans = fManager.beginTransaction();
+        fTrans.replace(R.id.content_frame, new CameraEmbeddedFragment());
+        fTrans.commit();
     }
 
     public ArrayList<String> getSendingToPeople() {
@@ -133,7 +140,7 @@ public class SendingFragment extends Fragment {
             }
 
         }
-        Toast.makeText(MyView.getContext(), ("People: " + People.size()), Toast.LENGTH_LONG).show();
+//        Toast.makeText(MyView.getContext(), ("People: " + People.size()), Toast.LENGTH_LONG).show();
         return People;
     }
 
