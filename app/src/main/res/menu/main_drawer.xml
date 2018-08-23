@@ -18,5 +18,8 @@
         <item
             android:id="@+id/menuCameraEmbedded"
             android:title="Camera Embedded"/>
+        <item
+            android:id="@+id/menuSending"
+            android:title="Sending"/>
     </group>
 </menu>
