@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
@@ -53,6 +55,7 @@ public class FriendsFragment extends Fragment {
     private FirebaseAuth FireBase;
     private FirebaseUser FireUser;
     private LinearLayout FriendsLayout;
+    private FirebaseStorage storage;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -67,6 +70,7 @@ public class FriendsFragment extends Fragment {
         FireBase = FirebaseAuth.getInstance();
         FireUser = FireBase.getCurrentUser();
         Email = FireUser.getEmail();
+        storage=FirebaseStorage.getInstance();
         SetupSearchClick();
         getFriends();
     }
@@ -126,6 +130,10 @@ public class FriendsFragment extends Fragment {
         {
             FrameLayout l = new FrameLayout(getView().getContext());
             l.setLayoutParams(params);
+
+            StorageReference ref=storage.getReference();
+            StorageReference path =ref.child(Email+"/");
+            //TODO get pictures from friends
 
             TextView tv = new TextView(this.getContext());
             tv.setLayoutParams(TextParams);

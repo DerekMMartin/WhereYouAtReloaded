@@ -127,6 +127,7 @@ public class CameraEmbeddedFragment extends Fragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "image_" + timeStamp + "_";
         return File.createTempFile(imageFileName, ".jpg", galleryFolder);
+//        return File.createTempFile("image",".png",galleryFolder);
     }
     private void createPreviewSession() {
         try {
