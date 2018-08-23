@@ -22,11 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends FragmentActivity
         implements
-//        FirstFragment.OnFragmentInteractionListener,
-//        SecondFragment.OnFragmentInteractionListener,
         FriendsFragment.OnFragmentInteractionListener,
-//        CameraFragment.OnFragmentInteractionListener,
-        CameraEmbeddedFragment.OnFragmentInteractionListener
+        CameraEmbeddedFragment.OnFragmentInteractionListener,
+        SendingFragment.OnFragmentInteractionListener
 {
 
     private DrawerLayout dLayout;
@@ -72,6 +70,9 @@ public class MainActivity extends FragmentActivity
                                 break;
                             case R.id.menuCameraEmbedded:
                                 changeFragment(new CameraEmbeddedFragment());
+                                break;
+                            case R.id.menuSending:
+                                changeFragment(new SendingFragment());
                                 break;
                         }
 
