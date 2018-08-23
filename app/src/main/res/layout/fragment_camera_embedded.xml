@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,29 +19,33 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/capture_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:background="@drawable/retake_button"
         android:layout_marginBottom="50dp" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cancel_photo_button"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="50dp"
-        android:text="Retake"
+        android:background="@drawable/retake_button"
         android:visibility="invisible"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/send_photo_button"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_marginBottom="50dp"
-        android:layout_marginRight="10dp"
-        android:text="Send"
-        android:visibility="invisible"/>
+        android:layout_marginEnd="20dp"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        android:background="@drawable/send_button"
+
+        android:contentDescription="Send Button" />
 </FrameLayout>
