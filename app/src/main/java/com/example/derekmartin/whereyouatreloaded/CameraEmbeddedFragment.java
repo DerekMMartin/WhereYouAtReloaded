@@ -76,7 +76,7 @@ public class CameraEmbeddedFragment extends Fragment {
         try {
             outputPhoto = new FileOutputStream(createImageFile(galleryFolder));
             photoBitmap=((TextureView)(MyView.findViewById(R.id.texture_view))).getBitmap();
-            photoBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputPhoto);
+            photoBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputPhoto);
 
             MyView.findViewById(R.id.capture_photo_button).setVisibility(View.INVISIBLE);
             MyView.findViewById(R.id.send_photo_button).setVisibility(View.VISIBLE);

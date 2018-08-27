@@ -119,7 +119,10 @@ public class HomeFragment extends Fragment {
         return layout;
     }
 
-    private void OpenPicture(Button c) {
+    private void OpenPicture(Button d) {
+        final Button c = d;
+
+        c.setOnClickListener(null);
         int i = Integer.parseInt(c.getText().toString());
         if (i > 0)
             i--;
@@ -146,12 +149,16 @@ public class HomeFragment extends Fragment {
 
                         firestore.collection("Users").document(UserEmail).collection(FriendEmail).document(s).delete();
                         path.delete();
+                        c.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                OpenPicture(c);
+                            }
+                        });
                     }
                 });
             }
         });
-
-
     }
 
     @Override

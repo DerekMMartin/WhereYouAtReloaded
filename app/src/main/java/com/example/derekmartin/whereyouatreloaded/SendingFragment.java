@@ -114,7 +114,7 @@ public class SendingFragment extends Fragment {
             task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getContext(), "Sent", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Sent", Toast.LENGTH_SHORT).show();
                 }
             });
         }
