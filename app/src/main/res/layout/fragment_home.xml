@@ -6,11 +6,6 @@
     tools:context=".HomeFragment"
     android:id="@+id/HomeLayout">
 
-    <ImageButton
-        android:id="@+id/HomeImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"/>
 
     <LinearLayout
         android:id="@+id/HomeLinearLayout"
@@ -25,5 +20,10 @@
             android:textSize="25sp"
             android:layout_margin="50dp"/>
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/HomeImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
 
 </FrameLayout>
