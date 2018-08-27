@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
-    android:orientation="vertical"
     android:id="@+id/HomeLayout">
 
-    <TextView
+    <ImageButton
+        android:id="@+id/HomeImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/HomeLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:gravity="center|top"
-        android:textSize="25sp"
-        android:layout_margin="50dp"/>
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:gravity="center|top"
+            android:textSize="25sp"
+            android:layout_margin="50dp"/>
+    </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

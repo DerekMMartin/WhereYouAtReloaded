@@ -1,6 +1,7 @@
 package com.example.derekmartin.whereyouatreloaded;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +34,11 @@ public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View MyView;
     private FirebaseAuth auth;
-    private  LinearLayout ll;
+    private LinearLayout ll;
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
     private Context c;
+    private ImageButton imageButton;
 
 
     public HomeFragment() {
@@ -44,8 +48,16 @@ public class HomeFragment extends Fragment {
     }
     private void SetupFragment(){
 
-       ll = MyView.findViewById(R.id.HomeLayout);
+       ll = MyView.findViewById(R.id.HomeLinearLayout);
+       imageButton = MyView.findViewById(R.id.HomeImageView);
        c = getContext();
+
+       imageButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               v.setVisibility(View.INVISIBLE);
+           }
+       });
 
         firestore.collection("Users").document(auth.getCurrentUser().getEmail()).collection("Friends").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -83,23 +95,47 @@ public class HomeFragment extends Fragment {
         layout.addView(tv);
 
         final Button count = new Button(c,null,R.style.Widget_AppCompat_Button_Colored);
+        count.setContentDescription(FriendEmail);
         count.setTextColor(getResources().getColor(R.color.colorAccent));
         count.setTextSize(20);
         count.setLayoutParams(ButtonParams);
+        count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenPicture((Button)v);
+            }
+        });
         layout.addView(count);
 
         firestore.collection("Users").document(auth.getCurrentUser().getEmail()).collection(FriendEmail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                int i = 0;
-                for(DocumentSnapshot doc : task.getResult()){
-                    i++;
-                }
+                int i = task.getResult().size();
                 count.setText((i+""));
             }
         });
 
         return layout;
+    }
+
+    private void OpenPicture(Button c){
+        String UserEmail = auth.getCurrentUser().getEmail();
+        String FriendEmail = c.getContentDescription().toString();
+        //TODO Pull the picture in here and display it.
+        //Delete the picture as well.
+
+
+
+//        imageButton.setImageBitmap();
+//        imageButton.setVisibility(View.VISIBLE);
+
+
+
+
+        int i = Integer.parseInt(c.getText().toString());
+        if(i > 0)
+            i--;
+        c.setText(i+"");
     }
 
     @Override

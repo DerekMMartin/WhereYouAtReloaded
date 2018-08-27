@@ -24,7 +24,8 @@ public class MainActivity extends FragmentActivity
         implements
         FriendsFragment.OnFragmentInteractionListener,
         CameraEmbeddedFragment.OnFragmentInteractionListener,
-        HomeFragment.OnFragmentInteractionListener
+        HomeFragment.OnFragmentInteractionListener,
+        SendingFragment.OnFragmentInteractionListener
 {
 
     private DrawerLayout dLayout;

@@ -102,7 +102,6 @@ public class SendingFragment extends Fragment {
     private void SendPictures() {
         ArrayList<String> people = getSendingToPeople();
         StorageReference ref = storage.getReference();
-        //TODO put sending in here..
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Where You At Reloaded").listFiles()[0];
         Uri b = Uri.fromFile(image);
@@ -176,7 +175,6 @@ public class SendingFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
