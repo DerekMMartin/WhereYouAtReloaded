@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
         final Button count = new Button(c, null, R.style.Widget_AppCompat_Button_Colored);
         count.setContentDescription(FriendEmail);
         count.setTextColor(getResources().getColor(R.color.colorAccent));
-        count.setTextSize(20);
+        count.setTextSize(40);
         count.setLayoutParams(ButtonParams);
         count.setOnClickListener(new View.OnClickListener() {
             @Override
