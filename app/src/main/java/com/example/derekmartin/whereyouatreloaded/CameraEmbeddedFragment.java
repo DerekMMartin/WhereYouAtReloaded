@@ -2,7 +2,9 @@ package com.example.derekmartin.whereyouatreloaded;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
@@ -69,6 +71,7 @@ public class CameraEmbeddedFragment extends Fragment {
     public CameraEmbeddedFragment() {
         // Required empty public constructor
     }
+
     public void onTakePhotoButtonClicked() {
         lock();
         FileOutputStream outputPhoto = null;
@@ -215,6 +218,10 @@ public class CameraEmbeddedFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        lockScreenOrientation();
+
         MyView = inflater.inflate(R.layout.fragment_camera_embedded, container, false);
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_REQUEST_CODE);
         createImageGallery();
@@ -284,7 +291,10 @@ public class CameraEmbeddedFragment extends Fragment {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        lockScreenOrientation();
         super.onCreate(savedInstanceState);
+
 
     }
     @Override
@@ -321,4 +331,18 @@ public class CameraEmbeddedFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+    private void lockScreenOrientation() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    private void unlockScreenOrientation() {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    }
+
 }

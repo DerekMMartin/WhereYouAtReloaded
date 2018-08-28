@@ -1,6 +1,8 @@
 package com.example.derekmartin.whereyouatreloaded;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
@@ -60,6 +62,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 v.setVisibility(View.INVISIBLE);
+                unlockScreenOrientation();
             }
         });
 
@@ -122,6 +125,7 @@ public class HomeFragment extends Fragment {
     private void OpenPicture(Button d) {
         final Button c = d;
 
+        lockScreenOrientation();
         c.setOnClickListener(null);
         int i = Integer.parseInt(c.getText().toString());
         if (i > 0)
@@ -193,5 +197,18 @@ public class HomeFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+
+    }
+    private void lockScreenOrientation() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    private void unlockScreenOrientation() {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 }

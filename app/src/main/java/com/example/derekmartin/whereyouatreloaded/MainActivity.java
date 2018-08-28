@@ -28,15 +28,14 @@ public class MainActivity extends FragmentActivity
         FriendsFragment.OnFragmentInteractionListener,
         CameraEmbeddedFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener,
-        SendingFragment.OnFragmentInteractionListener
-{
+        SendingFragment.OnFragmentInteractionListener {
 
     private DrawerLayout dLayout;
     private android.support.v4.app.FragmentManager fManager;
 
     private void LogOutAndSwitch() {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -46,13 +45,13 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fManager=getSupportFragmentManager();
+        fManager = getSupportFragmentManager();
 
-        dLayout=findViewById(R.id.drawerLayout);
+        dLayout = findViewById(R.id.drawerLayout);
         NavigationView nView = findViewById(R.id.nav_view);
 
-        ((TextView)nView.findViewById(R.id.EmailDisplay)).setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        ((Button)nView.findViewById(R.id.LogOutButton)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) nView.findViewById(R.id.EmailDisplay)).setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        ((Button) nView.findViewById(R.id.LogOutButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LogOutAndSwitch();
@@ -68,11 +67,14 @@ public class MainActivity extends FragmentActivity
                         item.setChecked(true);
                         dLayout.closeDrawers();
 
-                        switch (item.getItemId()){
+                        unlockScreenOrientation();
+                        switch (item.getItemId()) {
                             case R.id.menuFriends:
                                 changeFragment(new FriendsFragment());
                                 break;
                             case R.id.menuCameraEmbedded:
+//                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+////                                lockVertical();
                                 changeFragment(new CameraEmbeddedFragment());
                                 break;
                             case R.id.menuHome:
@@ -84,16 +86,34 @@ public class MainActivity extends FragmentActivity
                     }
                 });
     }
-        public void changeFragment(Fragment f){
-            FragmentTransaction fTrans=fManager.beginTransaction();
 
-            fTrans.replace(R.id.content_frame,f);
-            fTrans.addToBackStack(null);
-            fTrans.commit();
-        }
+    public void changeFragment(Fragment f) {
+        FragmentTransaction fTrans = fManager.beginTransaction();
+
+        fTrans.replace(R.id.content_frame, f);
+        fTrans.addToBackStack(null);
+        fTrans.commit();
+    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void lockScreenOrientation() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    private void lockVertical(){
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    private void unlockScreenOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 }
